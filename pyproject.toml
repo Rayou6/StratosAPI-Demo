@@ -1,0 +1,32 @@
+[project]
+name = "stratosapi"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "cairosvg>=2.9.0",
+    "diplomacy>=1.1.2",
+    "openrouter>=0.9.1",
+    "pydantic>=2.13.3",
+    "pyyaml>=6.0.3",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.0.3",
+]
+
+[build-system]
+requires = ["setuptools>=80"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["demo_app", "demo_app.*", "diplomacy_llm", "diplomacy_llm.*"]
+
+[tool.setuptools.package-data]
+demo_app = ["static/*.html", "static/*.css", "static/*.js"]
+
+[[tool.mypy.overrides]]
+module = "diplomacy.*"
+ignore_missing_imports = true

@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Demo Live Replay</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div id="musicPlayer" class="music-player" aria-label="Background music player">
+      <audio id="musicAudio" preload="auto"></audio>
+      <div class="music-controls">
+        <button id="musicShuffleBtn" class="music-button" type="button" title="Shuffle" aria-label="Shuffle">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M16 3h5v5"></path>
+            <path d="M4 20 21 3"></path>
+            <path d="M21 16v5h-5"></path>
+            <path d="m15 15 6 6"></path>
+            <path d="m4 4 5 5"></path>
+          </svg>
+        </button>
+        <button id="musicPrevBtn" class="music-button" type="button" title="Previous track" aria-label="Previous track">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path class="filled" d="M6 5h2v14H6z"></path>
+            <path class="filled" d="M20 5v14L9 12z"></path>
+          </svg>
+        </button>
+        <button id="musicPlayBtn" class="music-button music-play-button" type="button" title="Play music" aria-label="Play music">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path class="filled" d="M8 5v14l11-7z"></path>
+          </svg>
+        </button>
+        <button id="musicNextBtn" class="music-button" type="button" title="Next track" aria-label="Next track">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path class="filled" d="M18 5h-2v14h2z"></path>
+            <path class="filled" d="M4 5v14l11-7z"></path>
+          </svg>
+        </button>
+        <button id="musicRepeatBtn" class="music-button" type="button" title="Repeat all" aria-label="Repeat all">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="m17 2 4 4-4 4"></path>
+            <path d="M3 11V9a4 4 0 0 1 4-4h14"></path>
+            <path d="m7 22-4-4 4-4"></path>
+            <path d="M21 13v2a4 4 0 0 1-4 4H3"></path>
+          </svg>
+        </button>
+        <label class="music-volume" title="Volume" aria-label="Music volume">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path class="filled" d="M4 9v6h4l5 4V5L8 9z"></path>
+            <path d="M16 9.5a4 4 0 0 1 0 5"></path>
+          </svg>
+          <input id="musicVolume" type="range" min="0" max="100" value="20" aria-label="Music volume" />
+        </label>
+        <select id="musicSelect" aria-label="Background music">
+          <option value="">Loading music</option>
+        </select>
+      </div>
+    </div>
+
+    <section id="launcherView" class="launcher-view" aria-label="Start a demo run">
+      <div class="launcher-panel">
+        <div class="launcher-copy">
+          <h1>Demo Live</h1>
+          <p id="launcherStatus" class="status">Choose a setup to start</p>
+        </div>
+        <form id="launchForm" class="launch-form">
+          <div class="mode-tabs" role="tablist" aria-label="Launch tabs">
+            <button class="mode-tab active" type="button" data-mode="live" role="tab" aria-selected="true">Live</button>
+            <button class="mode-tab" type="button" data-mode="replay" role="tab" aria-selected="false">Replay</button>
+          </div>
+          <input id="runMode" type="hidden" value="live" />
+          <label id="setupField">
+            <span>Setup</span>
+            <select id="setupSelect" aria-label="Demo setup"></select>
+          </label>
+          <label id="launcherRunPicker" class="launcher-run-picker">
+            <span>Historic run</span>
+            <select id="launcherRunSelect" aria-label="Historic demo run"></select>
+          </label>
+          <label id="apiKeyField" class="api-key-field">
+            <span>OpenRouter key</span>
+            <input id="apiKeyInput" type="password" autocomplete="off" spellcheck="false" />
+          </label>
+          <button id="launchBtn" type="submit">Launch</button>
+          <p id="launcherWarning" class="launcher-warning" hidden></p>
+        </form>
+      </div>
+    </section>
+
+    <main id="dashboardView" class="app-shell is-hidden">
+      <header class="topbar">
+        <div class="topbar-title">
+          <h1>Demo Live Replay</h1>
+          <p id="statusText" class="status">Loading runs</p>
+        </div>
+        <div id="runStateBanner" class="run-state-banner" hidden>
+          <span class="run-state-dot" aria-hidden="true"></span>
+          <span id="runStateText">Live run in progress</span>
+          <button id="detachLiveBtn" class="stop-live-view-button" type="button">Stop live view</button>
+        </div>
+        <div id="postRunActions" class="post-run-actions" hidden>
+          <button id="newRunBtn" class="new-run-button" type="button">New live run</button>
+          <label class="run-picker">
+            <span>Historic run</span>
+            <select id="runSelect" aria-label="Historic demo run"></select>
+          </label>
+        </div>
+      </header>
+
+      <section class="dashboard-layout" aria-label="Demo replay dashboard">
+        <section class="map-panel" aria-label="Map replay">
+          <div class="panel-heading">
+            <h2>Map</h2>
+          </div>
+          <div id="boardFrame" class="board-frame" aria-live="polite"></div>
+        </section>
+
+        <aside class="right-rail">
+          <section class="details-panel" aria-label="Phase details">
+            <div class="detail-tabs" role="tablist" aria-label="Phase detail tabs">
+              <button class="detail-tab active" type="button" data-detail-tab="orders">Orders</button>
+              <button class="detail-tab" type="button" data-detail-tab="reasoning">Reasoning</button>
+              <button class="detail-tab" type="button" data-detail-tab="stats">Stats</button>
+              <button class="detail-tab" type="button" data-detail-tab="info">Info</button>
+              <button class="detail-tab" type="button" data-detail-tab="live">Live</button>
+            </div>
+            <div id="ordersPane" class="detail-pane active"></div>
+            <div id="reasoningPane" class="detail-pane"></div>
+            <div id="statsPane" class="detail-pane"></div>
+            <div id="infoPane" class="detail-pane">
+              <dl class="run-meta">
+                <div>
+                  <dt>Setup</dt>
+                  <dd id="setupName">-</dd>
+                </div>
+                <div>
+                  <dt>Map</dt>
+                  <dd id="mapName">-</dd>
+                </div>
+              </dl>
+              <div id="powerDetails" class="power-details"></div>
+            </div>
+            <div id="livePane" class="detail-pane">
+              <div id="liveEvents" class="live-events"></div>
+            </div>
+          </section>
+
+          <section class="messages-panel" aria-label="Private conversations">
+            <div class="panel-heading">
+              <h2>Messages</h2>
+            </div>
+            <div id="conversationTabs" class="conversation-tabs" role="tablist" aria-label="Conversations"></div>
+            <div id="messageList" class="chat-thread" aria-live="polite"></div>
+          </section>
+        </aside>
+      </section>
+
+      <footer class="timeline-bar">
+        <button id="prevBtn" class="icon-button" type="button" title="Previous phase" aria-label="Previous phase">
+          &#9664;
+        </button>
+        <button id="playBtn" class="icon-button play-button" type="button" title="Play" aria-label="Play">
+          &#9654;
+        </button>
+        <button id="nextBtn" class="icon-button" type="button" title="Next phase" aria-label="Next phase">
+          &#9654;&#9616;
+        </button>
+        <div class="phase-readout">
+          <strong id="phaseName">-</strong>
+          <span id="phaseIndex">0 / 0</span>
+          <span id="timelineState" class="timeline-state">Replay</span>
+        </div>
+        <button id="jumpLiveBtn" class="jump-live-button" type="button" hidden>Jump to live</button>
+        <input id="phaseSlider" class="phase-slider" type="range" min="0" max="0" value="0" aria-label="Phase" />
+      </footer>
+    </main>
+
+    <script src="/app.js"></script>
+  </body>
+</html>

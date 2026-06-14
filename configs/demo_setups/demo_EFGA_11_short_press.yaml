@@ -1,0 +1,28 @@
+default_model: "mistralai/mistral-nemo"
+
+power_models:
+  ENGLAND: "mistralai/mistral-nemo"
+  FRANCE: "mistralai/mistral-nemo"
+  GERMANY: "meta-llama/llama-3.1-8b-instruct"
+  AUSTRIA: "meta-llama/llama-3.1-8b-instruct"
+
+map_name: "configs/maps/EFGA_11.map"
+max_years: 2
+win_score: 11
+shuffle_models: false
+llm_seed: 1001
+prompt_variant: "baseline_orders"
+prompt_version: "neutral-v1"
+
+strategy_variant: "demo_live"
+strategy_version: "short_press"
+strategy_assignment:
+  default: "baseline"
+
+messaging_variant: "latency_pairwise_private"
+messaging_version: "demo_short_pairwise_private_press"
+messaging:
+  enabled: true
+  latency_pairwise_private:
+    max_messages_per_response: 2
+    max_turns_per_conversation: 2

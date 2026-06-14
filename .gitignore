@@ -1,0 +1,38 @@
+# Python-generated files
+__pycache__/
+*.py[cod]
+*$py.class
+build/
+dist/
+wheels/
+*.egg-info
+.ruff_cache
+.pytest_cache
+.mypy_cache
+.coverage
+coverage.xml
+htmlcov/
+
+# macOS Finder metadata
+.DS_Store
+
+# Virtual environments
+.venv
+.env
+.env.*
+!.env.example
+
+# Removed benchmark/runtime output.
+data/
+
+# Demo Live writes new runs under demo_data/. Keep only curated replay examples.
+demo_data/*
+!demo_data/README.md
+!demo_data/demo_live_demo_EFGA_11_short_press_0906_102358/
+!demo_data/demo_live_demo_EFGA_11_short_press_0906_102358/**
+!demo_data/demo_live_demo_EFGA_11_short_press_0906_112314/
+!demo_data/demo_live_demo_EFGA_11_short_press_0906_112314/**
+!demo_data/demo_live_demo_EFGA_11_short_press_0906_112845/
+!demo_data/demo_live_demo_EFGA_11_short_press_0906_112845/**
+!demo_data/demo_live_demo_EFGA_11_short_press_0906_123909/
+!demo_data/demo_live_demo_EFGA_11_short_press_0906_123909/**
