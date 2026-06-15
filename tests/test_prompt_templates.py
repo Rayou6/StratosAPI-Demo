@@ -210,7 +210,7 @@ def test_prompt_template_hash_tracks_template_content() -> None:
     assert baseline_hash != contextual_hash
 
 
-def test_orders_with_context_variant_renders_future_placeholders() -> None:
+def test_orders_with_context_variant_renders_context_sections() -> None:
     prompt = get_order_prompt_template("orders_with_context").render_user(
         make_snapshot(),
     )

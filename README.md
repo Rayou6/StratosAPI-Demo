@@ -138,7 +138,7 @@ uv run python -m demo_app.server
 
 ## Using The Dashboard
 
-A short [YouTube tutorial](https://www.youtube.com/) is available and is
+A short [YouTube tutorial](https://youtu.be/MCgfFlk8Zt0) is available and is
 strongly recommended for understanding the dashboard quickly. The adapted game
 rules are documented in [docs/game-rules.md](docs/game-rules.md).
 
@@ -169,6 +169,18 @@ More project notes are available here:
 
 - [Architecture notes](docs/architecture.md)
 - [Research context](docs/research-context.md)
+
+## Provided API Key
+
+For convenience, I provide an OpenRouter API key privately on the course
+website for testing live runs. I set a USD 5 spending limit on this key so
+that live testing remains controlled and does not risk unexpectedly high costs.
+
+This limit should still be more than enough to test the application properly:
+it covers several full live runs, and even more short runs.
+
+If there is any problem with live runs or with the provided API key, please send
+me an email at `rayan.rami@student.unisg.ch` so I can fix the issue immediately.
 
 ## Credits And Notes
 

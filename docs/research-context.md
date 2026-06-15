@@ -4,7 +4,7 @@ The broader research extension of this project is developed in the main
 [StratosAPI](https://github.com/Rayou6/StratosAPI) repository. This demo
 repository only contains the reduced version prepared for the course submission.
 The goal here is not to publish the full research data, but to explain the idea
-behind the extension and the direction in which the project can grow.
+behind the extension and how this course demo relates to the broader project.
 
 ## Research Goal
 
@@ -65,7 +65,7 @@ metadata, metrics, tables, artifacts, and visualizations in a structured way.
 
 This is important because a full research run can produce a large amount of
 data: game files, logs, model calls, messages, board states, metrics, and
-analysis tables. Committing every run directly to GitHub would quickly make the
+analysis tables. Committing every run directly to GitHub quickly makes the
 repository noisy and unnecessarily large. Instead, GitHub can stay focused on
 the code, selected examples, and reproducible configurations, while detailed run
 data can be tracked privately outside the repository.
@@ -73,7 +73,7 @@ data can be tracked privately outside the repository.
 No private API keys, private dashboards, or full research datasets are published
 in this demo repository.
 
-## Preliminary Direction
+## Research Direction
 
 Early exploratory runs suggest that this environment is useful for observing
 clear behavioral differences between models and strategy conditions. Some models
@@ -82,10 +82,10 @@ pressure neighboring powers, or adapt after a failed plan. Private messaging als
 makes the analysis richer, because the final orders can be compared with what a
 model promised earlier in the phase.
 
-These observations are still preliminary. The current goal is to build a clean
-and repeatable setup first, then use it to run larger and more controlled
-experiments. More detailed results can be discussed privately if someone is
-interested in the research direction.
+These observations are intentionally presented as research context rather than
+as final benchmark results. This demo repository focuses on the clean,
+repeatable technical setup. More detailed results can be discussed privately if
+someone is interested in the research direction.
 
 Contact: `rayan.rami@student.unisg.ch`
 
@@ -99,10 +99,10 @@ games or seven-power games multiply this cost even more.
 There are also research limitations. LLM behavior can be stochastic, one game is
 not enough to prove a general pattern, and fair comparison requires repeated
 runs with controlled settings. For this reason, turning the project into a more
-complete research benchmark would require time, infrastructure, and ideally
-financial support.
+complete research benchmark requires time, infrastructure, and ideally financial
+support.
 
-## Possible Extensions
+## Optional Research Extensions
 
 Several extensions could make the project more useful as a research tool:
 
@@ -112,14 +112,15 @@ Several extensions could make the project more useful as a research tool:
 - comparing models across standardized maps and scenarios;
 - creating a leaderboard where users can submit agents or model setups;
 - making the benchmark easy enough for other researchers to reproduce;
-- using the system as a social-strategy benchmark for future LLMs.
+- using the system as a social-strategy benchmark for new LLM generations.
 
-In the long term, this could become more than a course project: it could be a
-small benchmark for testing how LLMs behave in multi-agent social environments.
+This is why I see StratosAPI as more than a course project: the same setup can
+also support a small benchmark for testing how LLMs behave in multi-agent social
+environments.
 
 ## Collaboration Interest
 
 If a professor or researcher is interested in this direction, or knows someone
-who might be, I would be very happy to discuss it. The current project provides
-an initial technical setup, but stronger academic guidance and research support
-would make it possible to explore the topic much more seriously.
+who might be, I am very happy to discuss it. The current project provides an
+initial technical setup, and stronger academic guidance and research support can
+help explore the topic much more seriously.

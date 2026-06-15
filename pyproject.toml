@@ -1,7 +1,7 @@
 [project]
 name = "stratosapi"
 version = "0.1.0"
-description = "Add your description here"
+description = "Reduced runnable demo for LLM-controlled Diplomacy games and live StratosAPI replays."
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [

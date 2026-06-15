@@ -119,8 +119,8 @@ being resolved, or the game ending.
 `game.jsonl` stores the saved Diplomacy game. It is used to reconstruct board
 states for replay.
 
-This file-based design is simple on purpose. A database would add complexity
-without much benefit for this demo. JSON and JSONL artifacts are easy to read,
+This file-based design is simple on purpose. A database adds complexity without
+much benefit for this demo. JSON and JSONL artifacts are easy to read,
 debug, commit as examples, and reload later.
 
 Replay support is handled by `demo_app/replay.py`, `demo_app/events.py`,
