@@ -5,6 +5,7 @@ from diplomacy_llm.strategies.models import (
 )
 from diplomacy_llm.strategies.prompts import render_strategy_context
 from diplomacy_llm.strategies.protocols import (
+    AggressiveExpansionV2Strategy,
     BaselineStrategy,
     BaseStrategyProtocol,
     available_strategy_protocol_names,
@@ -22,6 +23,7 @@ available_strategy_names = available_strategy_protocol_names
 get_strategy = get_strategy_protocol
 
 __all__ = [
+    "AggressiveExpansionV2Strategy",
     "BaseOrderStrategy",
     "BaseStrategyProtocol",
     "BaselineStrategy",

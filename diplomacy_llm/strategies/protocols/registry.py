@@ -2,12 +2,16 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
+from diplomacy_llm.strategies.protocols.aggressive_expansion import (
+    AggressiveExpansionV2Strategy,
+)
 from diplomacy_llm.strategies.protocols.baseline import BaselineStrategy
 
 if TYPE_CHECKING:
     from diplomacy_llm.strategies.protocols.base import BaseStrategyProtocol
 
 _STRATEGY_PROTOCOL_CLASSES: dict[str, type[BaseStrategyProtocol]] = {
+    AggressiveExpansionV2Strategy.name: AggressiveExpansionV2Strategy,
     BaselineStrategy.name: BaselineStrategy,
 }
 

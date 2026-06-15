@@ -17,6 +17,11 @@ from diplomacy_llm.config import (
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 DEMO_CONFIG_NAME = "demo_EFGA_11_short_press"
+DEMO_SETUP_NAMES = [
+    "demo_EFGA_11_short_press",
+    "demo_EFGA_aggressive",
+    "demo_EFGA_baseline",
+]
 
 
 def test_config_import_isolated_process_without_config_arg() -> None:
@@ -84,13 +89,13 @@ def test_load_settings_does_not_fall_back_to_removed_historical_setups() -> None
 
     exc = exc_info.value
     assert exc.path == SETUPS_DIR / f"{removed_name}.yaml"
-    assert exc.available == [DEMO_CONFIG_NAME]
+    assert exc.available == DEMO_SETUP_NAMES
 
 
 def test_default_setup_listing_only_shows_demo_setups() -> None:
     current_names = sorted(path.stem for path in SETUPS_DIR.glob("*.yaml"))
 
-    assert current_names == [DEMO_CONFIG_NAME]
+    assert current_names == DEMO_SETUP_NAMES
     assert available_setup_names() == current_names
     assert setup_path_for(DEMO_CONFIG_NAME) == SETUPS_DIR / f"{DEMO_CONFIG_NAME}.yaml"
 

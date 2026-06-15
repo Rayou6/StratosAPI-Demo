@@ -4,6 +4,7 @@ import pytest
 
 from diplomacy_llm.phase_snapshot import PowerPhaseSnapshot
 from diplomacy_llm.strategies import (
+    AggressiveExpansionV2Strategy,
     BaselineStrategy,
     BaseStrategyProtocol,
     StrategyContext,
@@ -42,15 +43,22 @@ def make_snapshot(
     )
 
 
-def test_registry_exposes_baseline_strategy_only() -> None:
-    assert available_strategy_names() == ("baseline",)
-    assert available_strategy_protocol_names() == ("baseline",)
+def test_registry_exposes_demo_strategies() -> None:
+    assert available_strategy_names() == ("aggressive_expansion_v2", "baseline")
+    assert available_strategy_protocol_names() == (
+        "aggressive_expansion_v2",
+        "baseline",
+    )
+    assert isinstance(get_strategy("aggressive_expansion_v2"), AggressiveExpansionV2Strategy)
     assert isinstance(get_strategy("baseline"), BaselineStrategy)
     assert isinstance(get_strategy_protocol("baseline"), BaseStrategyProtocol)
 
 
 def test_registry_rejects_unknown_strategy_with_available_names() -> None:
-    with pytest.raises(ValueError, match="Available strategies: baseline"):
+    with pytest.raises(
+        ValueError,
+        match="Available strategies: aggressive_expansion_v2, baseline",
+    ):
         get_strategy("missing")
 
 
@@ -63,6 +71,20 @@ def test_baseline_strategy_produces_no_context() -> None:
         strategy.render_prompt_section(StrategyRuntimeContext(snapshot=make_snapshot()))
         is None
     )
+
+
+def test_aggressive_expansion_v2_produces_targeted_context() -> None:
+    strategy = get_strategy("aggressive_expansion_v2")
+    context = strategy.build_context(make_snapshot())
+
+    assert strategy.identity == StrategyIdentity(
+        name="aggressive_expansion_v2",
+        version="v1",
+    )
+    assert context is not None
+    assert "Aggression is mandatory" in context.doctrine
+    assert "Spring must create a named fight" in context.phase_objective
+    assert any("Use only exact orders" in item for item in context.constraints)
 
 
 def test_render_strategy_context_uses_stable_schema() -> None:
