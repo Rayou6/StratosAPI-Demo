@@ -90,7 +90,7 @@ def settings() -> Settings:
     return Settings(
         default_model="fake/model",
         power_models={"FRANCE": "fake/model"},
-        map_name="configs/maps/EFG_9.map",
+        map_name="configs/maps/EFGA_11.map",
         max_years=1,
         win_score=9,
         max_tokens=256,

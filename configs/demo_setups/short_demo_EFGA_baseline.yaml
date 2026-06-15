@@ -2,27 +2,27 @@ default_model: "mistralai/mistral-nemo"
 
 power_models:
   ENGLAND: "mistralai/mistral-nemo"
-  FRANCE: "mistralai/mistral-nemo"
-  GERMANY: "meta-llama/llama-3.1-8b-instruct"
-  AUSTRIA: "meta-llama/llama-3.1-8b-instruct"
+  FRANCE: "meta-llama/llama-3.1-8b-instruct"
+  GERMANY: "qwen/qwen3-235b-a22b-2507"
+  AUSTRIA: "deepseek/deepseek-v4-flash"
 
 map_name: "configs/maps/EFGA_11.map"
-max_years: 2
+max_years: 4
 win_score: 11
-shuffle_models: false
+shuffle_models: true
 llm_seed: 1001
 prompt_variant: "baseline_orders"
 prompt_version: "neutral-v1"
 
-strategy_variant: "demo_live"
-strategy_version: "short_press"
+strategy_variant: "demo_EFGA_baseline"
+strategy_version: "baseline"
 strategy_assignment:
   default: "baseline"
 
 messaging_variant: "latency_pairwise_private"
-messaging_version: "demo_short_pairwise_private_press"
+messaging_version: "private_press_light"
 messaging:
   enabled: true
   latency_pairwise_private:
-    max_messages_per_response: 2
-    max_turns_per_conversation: 2
+    max_messages_per_response: 3
+    max_turns_per_conversation: 4

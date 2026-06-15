@@ -31,8 +31,8 @@ def test_list_demo_runs_only_returns_replayable_runs(tmp_path: Path) -> None:
             "label": "Sample Replay",
             "metadata": {
                 "name": "Sample Replay",
-                "setup": "demo_EFGA_11_short_press",
-                "map": "EFG_9",
+                "setup": "short_demo_EFGA_baseline",
+                "map": "EFGA_11",
                 "powers": ["ENGLAND", "FRANCE", "GERMANY"],
             },
             "has_events": True,
@@ -234,15 +234,15 @@ def test_demo_run_label_removes_seconds_from_existing_stamp() -> None:
 
 def test_demo_run_label_cleans_generated_live_run_names() -> None:
     metadata = {
-        "name": "demo_EFGA_11_short_press (live)",
-        "setup": "demo_EFGA_11_short_press",
+        "name": "short_demo_EFGA_baseline (live)",
+        "setup": "short_demo_EFGA_baseline",
         "run_mode": "live",
         "created_at": "2026-06-09T14:02:00",
     }
 
     assert (
         demo_run_label("demo_run", metadata)
-        == "EFGA 11 short press (live) (09.06.2026 - 14:02)"
+        == "short demo EFGA baseline (live) (09.06.2026 - 14:02)"
     )
 
 
@@ -356,8 +356,8 @@ def _write_demo_run(data_dir: Path, run_id: str) -> Path:
         json.dumps(
             {
                 "name": "Sample Replay",
-                "setup": "demo_EFGA_11_short_press",
-                "map": "EFG_9",
+                "setup": "short_demo_EFGA_baseline",
+                "map": "EFGA_11",
                 "powers": ["ENGLAND", "FRANCE", "GERMANY"],
             },
         ),
@@ -437,7 +437,7 @@ def _write_demo_run(data_dir: Path, run_id: str) -> Path:
         encoding="utf-8",
     )
     saved_game = run_dir / "game.jsonl"
-    game = Game(map_name=str(PROJECT_ROOT / "configs" / "maps" / "EFG_9.map"))
+    game = Game(map_name=str(PROJECT_ROOT / "configs" / "maps" / "EFGA_11.map"))
     for power, units in game.get_units().items():
         game.set_orders(power, [f"{unit} H" for unit in units])
         game.set_wait(power, False)

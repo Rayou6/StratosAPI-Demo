@@ -1959,9 +1959,18 @@ function renderStats(visibleEvents = [], frame = null) {
   }
 
   const selectedPhaseIndex = selectedStatsPhaseIndex(frame);
-  const {startYear, maxYear} = supplyYearRange(metadata, visibleEvents);
-  const winScore = positiveNumber(metadata.win_score, maxObservedScore(visibleEvents, powers, 1));
-  const latestScores = latestScoresUpToPhase(visibleEvents, powers, selectedPhaseIndex);
+  const initialScores = initialScoreSnapshot(metadata, visibleEvents);
+  const {startYear, maxYear} = supplyYearRange(metadata, visibleEvents, initialScores);
+  const winScore = positiveNumber(
+    metadata.win_score,
+    maxObservedScore(visibleEvents, powers, 1, initialScores),
+  );
+  const latestScores = latestScoresUpToPhase(
+    visibleEvents,
+    powers,
+    selectedPhaseIndex,
+    initialScores,
+  );
   const orderStats = cumulativeOrderStats(visibleEvents, powers);
 
   const layout = document.createElement("div");
@@ -1972,6 +1981,7 @@ function renderStats(visibleEvents = [], frame = null) {
   trajectoryCard.appendChild(
     renderSupplyCenterChart({
       events: visibleEvents,
+      initialScores,
       powers,
       selectedPhaseIndex,
       startYear,
@@ -2018,6 +2028,8 @@ function statPowers(metadata, events) {
   }
 
   const powers = new Set();
+  const initialScores = normalizedScores(metadata.initial_scores);
+  Object.keys(initialScores).forEach((power) => powers.add(power));
   for (const event of events) {
     if (event.scores && typeof event.scores === "object") {
       Object.keys(event.scores).forEach((power) => powers.add(power));
@@ -2039,16 +2051,52 @@ function positiveNumber(value, fallback) {
   return Number.isFinite(numberValue) && numberValue > 0 ? numberValue : fallback;
 }
 
-function supplyYearRange(metadata, events) {
+function initialScoreSnapshot(metadata, events) {
+  const metadataScores = normalizedScores(metadata.initial_scores);
+  const runStartedScores = normalizedScores(
+    events.find((event) => event.type === "run_started")?.scores,
+  );
+  const scores = Object.keys(metadataScores).length ? metadataScores : runStartedScores;
+  if (!Object.keys(scores).length) {
+    return null;
+  }
+
+  const gameplayStartYear = firstScoreEventYear(events) ?? 1901;
+  return {
+    year: gameplayStartYear - 1,
+    scores,
+  };
+}
+
+function normalizedScores(scores) {
+  if (!scores || typeof scores !== "object") {
+    return {};
+  }
+  const entries = Object.entries(scores)
+    .map(([power, value]) => [String(power), Number(value)])
+    .filter(([, value]) => Number.isFinite(value));
+  return Object.fromEntries(entries);
+}
+
+function firstScoreEventYear(events) {
+  const years = events
+    .map(scoreEventYear)
+    .filter((year) => typeof year === "number");
+  return years.length ? Math.min(...years) : null;
+}
+
+function supplyYearRange(metadata, events, initialScores = null) {
   const observedYears = events
     .map(scoreEventYear)
     .filter((year) => typeof year === "number");
-  const startYear = observedYears.length ? Math.min(...observedYears) : 1901;
+  const gameplayStartYear =
+    observedYears.length ? Math.min(...observedYears) : (initialScores?.year ?? 1900) + 1;
+  const startYear = initialScores?.year ?? gameplayStartYear;
   const maxYears = positiveNumber(metadata.max_years, 0);
   if (maxYears > 0) {
     return {
       startYear,
-      maxYear: startYear + Math.max(0, Math.round(maxYears) - 1),
+      maxYear: gameplayStartYear + Math.max(0, Math.round(maxYears) - 1),
     };
   }
   return {
@@ -2057,8 +2105,16 @@ function supplyYearRange(metadata, events) {
   };
 }
 
-function maxObservedScore(events, powers, fallback) {
+function maxObservedScore(events, powers, fallback, initialScores = null) {
   let highest = fallback;
+  if (initialScores) {
+    for (const power of powers) {
+      const value = Number(initialScores.scores[power]);
+      if (Number.isFinite(value)) {
+        highest = Math.max(highest, value);
+      }
+    }
+  }
   for (const event of events) {
     if (!event.scores || typeof event.scores !== "object") {
       continue;
@@ -2073,7 +2129,7 @@ function maxObservedScore(events, powers, fallback) {
   return highest;
 }
 
-function latestScoresUpToPhase(events, powers, selectedPhaseIndex) {
+function latestScoresUpToPhase(events, powers, selectedPhaseIndex, initialScores = null) {
   const scoreEvents = events
     .filter((event) => event.scores && typeof event.scores === "object")
     .filter((event) => {
@@ -2081,7 +2137,7 @@ function latestScoresUpToPhase(events, powers, selectedPhaseIndex) {
       return typeof phaseIndex === "number" && phaseIndex <= selectedPhaseIndex;
     })
     .sort(eventSort);
-  const latest = scoreEvents.at(-1)?.scores || {};
+  const latest = scoreEvents.at(-1)?.scores || initialScores?.scores || {};
   return Object.fromEntries(
     powers.map((power) => {
       const value = Number(latest[power]);
@@ -2133,6 +2189,7 @@ function renderScoreSummary({powers, scores, phase, winScore}) {
 
 function renderSupplyCenterChart({
   events,
+  initialScores,
   powers,
   selectedPhaseIndex,
   startYear,
@@ -2160,7 +2217,7 @@ function renderSupplyCenterChart({
     xLabel: "Year",
   });
 
-  const timelines = supplyTimelines(events, powers, selectedPhaseIndex);
+  const timelines = supplyTimelines(events, powers, selectedPhaseIndex, initialScores);
   for (const power of powers) {
     const points = timelines.get(power) || [];
     const plotted = points.map((point) => ({
@@ -2193,8 +2250,20 @@ function renderSupplyCenterChart({
   return svg;
 }
 
-function supplyTimelines(events, powers, selectedPhaseIndex) {
+function supplyTimelines(events, powers, selectedPhaseIndex, initialScores = null) {
   const timelines = new Map(powers.map((power) => [power, []]));
+  if (initialScores) {
+    for (const power of powers) {
+      const value = Number(initialScores.scores[power]);
+      if (!Number.isFinite(value)) {
+        continue;
+      }
+      upsertTimelinePoint(timelines.get(power), {
+        year: initialScores.year,
+        value,
+      });
+    }
+  }
   const scoreEvents = events
     .filter((event) => event.scores && typeof event.scores === "object")
     .sort(eventSort);

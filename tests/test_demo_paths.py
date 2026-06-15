@@ -17,17 +17,22 @@ def test_demo_setup_listing_only_reads_demo_setups() -> None:
     names = available_demo_setup_names()
 
     assert names == sorted(path.stem for path in DEMO_SETUPS_DIR.glob("*.yaml"))
-    assert "demo_EFGA_11_short_press" in names
-    assert names == ["demo_EFGA_11_short_press"]
+    assert "short_demo_EFGA_baseline" in names
+    assert names == [
+        "demo_EFGA_aggressive",
+        "demo_EFGA_baseline",
+        "short_demo_EFGA_aggressive",
+        "short_demo_EFGA_baseline",
+    ]
 
 
-def test_load_demo_settings_loads_short_press_setup() -> None:
-    settings = load_demo_settings("demo_EFGA_11_short_press")
+def test_load_demo_settings_loads_short_baseline_setup() -> None:
+    settings = load_demo_settings("short_demo_EFGA_baseline")
 
     assert settings.map_name == "configs/maps/EFGA_11.map"
-    assert settings.max_years == 2
+    assert settings.max_years == 4
     assert settings.win_score == 11
-    assert settings.shuffle_models is False
+    assert settings.shuffle_models is True
     assert settings.messaging_variant == "latency_pairwise_private"
     assert settings.messaging_enabled_powers == [
         "ENGLAND",
@@ -35,8 +40,8 @@ def test_load_demo_settings_loads_short_press_setup() -> None:
         "GERMANY",
         "AUSTRIA",
     ]
-    assert settings.messaging.latency_pairwise_private.max_messages_per_response == 2
-    assert settings.messaging.latency_pairwise_private.max_turns_per_conversation == 2
+    assert settings.messaging.latency_pairwise_private.max_messages_per_response == 3
+    assert settings.messaging.latency_pairwise_private.max_turns_per_conversation == 4
 
 
 def test_load_demo_settings_does_not_fall_back_to_benchmark_setups(
@@ -52,7 +57,7 @@ def test_load_demo_settings_does_not_fall_back_to_benchmark_setups(
 
 def test_demo_path_helpers_reject_path_like_names() -> None:
     with pytest.raises(InvalidArtifactNameError):
-        demo_setup_path_for("../demo_setups/demo_EFGA_11_short_press")
+        demo_setup_path_for("../demo_setups/short_demo_EFGA_baseline")
 
     with pytest.raises(InvalidArtifactNameError):
         demo_run_paths(r"..\data\runs")

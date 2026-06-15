@@ -7,7 +7,7 @@ power_models:
   AUSTRIA: "deepseek/deepseek-v4-flash"
 
 map_name: "configs/maps/EFGA_11.map"
-max_years: 12
+max_years: 4
 win_score: 11
 shuffle_models: true
 llm_seed: 1001

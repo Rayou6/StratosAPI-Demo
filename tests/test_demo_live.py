@@ -269,7 +269,7 @@ def test_demo_live_provider_error_keeps_partial_replay_inspectable(
             orders_path,
             messages_path,
         )
-        game = Game(map_name=str(PROJECT_ROOT / "configs" / "maps" / "EFG_9.map"))
+        game = Game(map_name=str(PROJECT_ROOT / "configs" / "maps" / "EFGA_11.map"))
         observer.on_run_started(
             game=game,
             settings=settings,
@@ -635,7 +635,7 @@ power_models:
   ENGLAND: "model/default"
   FRANCE: "model/default"
   GERMANY: "model/default"
-map_name: "configs/maps/EFG_9.map"
+map_name: "configs/maps/EFGA_11.map"
 max_years: 1
 win_score: 9
 shuffle_models: false

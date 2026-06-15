@@ -2,15 +2,14 @@ default_model: "mistralai/mistral-nemo"
 
 power_models:
   ENGLAND: "mistralai/mistral-nemo"
-  FRANCE: "google/gemma-4-31b-it"
+  FRANCE: "meta-llama/llama-3.1-8b-instruct"
   GERMANY: "qwen/qwen3-235b-a22b-2507"
   AUSTRIA: "deepseek/deepseek-v4-flash"
 
 map_name: "configs/maps/EFGA_11.map"
 max_years: 12
 win_score: 11
-max_tokens: 4096
-shuffle_models: false
+shuffle_models: true
 llm_seed: 1001
 prompt_variant: "baseline_orders"
 prompt_version: "neutral-v1"

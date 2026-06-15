@@ -113,7 +113,7 @@ class Settings(BaseModel):
     total_scs: int = Field(default=34, ge=1)
 
     # LLM call
-    max_tokens: int = Field(default=4096, ge=1)
+    max_tokens: int = Field(default=1024, ge=1)
     max_retries: int = Field(default=3, ge=1)
     retry_delay: float = Field(default=2.0, ge=0)
     llm_seed: int | None = Field(default=None, ge=0, lt=_MODEL_ASSIGNMENT_SEED_LIMIT)

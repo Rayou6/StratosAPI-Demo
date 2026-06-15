@@ -1,14 +1,14 @@
 {
   "schema": "stratosapi-demo-run-v1",
-  "run_id": "demo_live_demo_EFGA_11_short_press_0906_112845",
-  "name": "EFGA 11 short press (live) (09.06.2026 - 13:28)",
+  "run_id": "demo_live_demo_EFGA_aggressive_1506_140129",
+  "name": "EFGA aggressive (live) (15.06.2026 - 16:01)",
   "run_mode": "live",
   "status": "done",
-  "created_at": "2026-06-09T11:28:45.459644+00:00",
-  "setup": "demo_EFGA_11_short_press",
-  "setup_name": "demo_EFGA_11_short_press",
-  "setup_label": "EFGA 11 short press",
-  "setup_path": "configs/demo_setups/demo_EFGA_11_short_press.yaml",
+  "created_at": "2026-06-15T14:01:29.088731+00:00",
+  "setup": "demo_EFGA_aggressive",
+  "setup_name": "demo_EFGA_aggressive",
+  "setup_label": "EFGA aggressive",
+  "setup_path": "configs/demo_setups/demo_EFGA_aggressive.yaml",
   "map": "configs/maps/EFGA_11.map",
   "map_name": "configs/maps/EFGA_11.map",
   "powers": [
@@ -19,45 +19,45 @@
   ],
   "power_models": {
     "ENGLAND": "mistralai/mistral-nemo",
-    "FRANCE": "mistralai/mistral-nemo",
-    "GERMANY": "meta-llama/llama-3.1-8b-instruct",
-    "AUSTRIA": "meta-llama/llama-3.1-8b-instruct"
+    "FRANCE": "meta-llama/llama-3.1-8b-instruct",
+    "GERMANY": "qwen/qwen3-235b-a22b-2507",
+    "AUSTRIA": "deepseek/deepseek-v4-flash"
   },
   "effective_power_models": {
     "ENGLAND": "mistralai/mistral-nemo",
-    "FRANCE": "mistralai/mistral-nemo",
-    "GERMANY": "meta-llama/llama-3.1-8b-instruct",
-    "AUSTRIA": "meta-llama/llama-3.1-8b-instruct"
+    "FRANCE": "meta-llama/llama-3.1-8b-instruct",
+    "GERMANY": "qwen/qwen3-235b-a22b-2507",
+    "AUSTRIA": "deepseek/deepseek-v4-flash"
   },
   "model_assignment_policy": "configured_order",
   "model_assignment_seed": null,
   "strategies": {
     "ENGLAND": {
-      "name": "baseline",
+      "name": "aggressive_expansion_v2",
       "version": "v1",
       "source": "default",
       "matched_model": null
     },
     "FRANCE": {
-      "name": "baseline",
+      "name": "aggressive_expansion_v2",
       "version": "v1",
       "source": "default",
       "matched_model": null
     },
     "GERMANY": {
-      "name": "baseline",
+      "name": "aggressive_expansion_v2",
       "version": "v1",
       "source": "default",
       "matched_model": null
     },
     "AUSTRIA": {
-      "name": "baseline",
+      "name": "aggressive_expansion_v2",
       "version": "v1",
       "source": "default",
       "matched_model": null
     }
   },
-  "max_years": 2,
+  "max_years": 12,
   "win_score": 11,
   "total_scs": 34,
   "messaging": {
@@ -76,13 +76,13 @@
     "GERMANY": 3,
     "AUSTRIA": 3
   },
-  "finished_at": "2026-06-09T11:31:09.982655+00:00",
-  "final_status": "completed_no_winner",
-  "winner": null,
+  "finished_at": "2026-06-15T15:21:19.516443+00:00",
+  "final_status": "winner",
+  "winner": "AUSTRIA",
   "final_scores": {
-    "ENGLAND": 3,
+    "ENGLAND": 5,
     "FRANCE": 3,
-    "GERMANY": 3,
-    "AUSTRIA": 3
+    "GERMANY": 4,
+    "AUSTRIA": 11
   }
 }

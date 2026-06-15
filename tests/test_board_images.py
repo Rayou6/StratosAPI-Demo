@@ -51,7 +51,7 @@ def test_temporary_board_pngs_removes_local_images(tmp_path: Path) -> None:
 
 def _write_one_phase_saved_game(tmp_path: Path) -> Path:
     saved_game = tmp_path / "game.jsonl"
-    game = Game(map_name=str(PROJECT_ROOT / "configs" / "maps" / "EFG_9.map"))
+    game = Game(map_name=str(PROJECT_ROOT / "configs" / "maps" / "EFGA_11.map"))
     for power, units in game.get_units().items():
         game.set_orders(power, [f"{unit} H" for unit in units])
         game.set_wait(power, False)

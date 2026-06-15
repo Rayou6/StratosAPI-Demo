@@ -16,11 +16,12 @@ from diplomacy_llm.config import (
 )
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
-DEMO_CONFIG_NAME = "demo_EFGA_11_short_press"
+DEMO_CONFIG_NAME = "short_demo_EFGA_baseline"
 DEMO_SETUP_NAMES = [
-    "demo_EFGA_11_short_press",
     "demo_EFGA_aggressive",
     "demo_EFGA_baseline",
+    "short_demo_EFGA_aggressive",
+    "short_demo_EFGA_baseline",
 ]
 
 
@@ -44,9 +45,9 @@ def test_load_settings_loads_current_setup() -> None:
     settings = load_settings(DEMO_CONFIG_NAME)
 
     assert settings.map_name == "configs/maps/EFGA_11.map"
-    assert settings.max_years == 2
+    assert settings.max_years == 4
     assert settings.win_score == 11
-    assert settings.shuffle_models is False
+    assert settings.shuffle_models is True
     assert settings.model_assignment_seed is None
     assert settings.llm_seed == 1001
     assert settings.temperature is None
@@ -55,9 +56,9 @@ def test_load_settings_loads_current_setup() -> None:
     assert settings.prompt_version == "neutral-v1"
     assert settings.power_models == {
         "ENGLAND": "mistralai/mistral-nemo",
-        "FRANCE": "mistralai/mistral-nemo",
-        "GERMANY": "meta-llama/llama-3.1-8b-instruct",
-        "AUSTRIA": "meta-llama/llama-3.1-8b-instruct",
+        "FRANCE": "meta-llama/llama-3.1-8b-instruct",
+        "GERMANY": "qwen/qwen3-235b-a22b-2507",
+        "AUSTRIA": "deepseek/deepseek-v4-flash",
     }
     assert settings.powers == ["ENGLAND", "FRANCE", "GERMANY", "AUSTRIA"]
 
@@ -73,8 +74,8 @@ def test_load_settings_loads_demo_messaging_setup() -> None:
         "GERMANY",
         "AUSTRIA",
     ]
-    assert settings.messaging.latency_pairwise_private.max_messages_per_response == 2
-    assert settings.messaging.latency_pairwise_private.max_turns_per_conversation == 2
+    assert settings.messaging.latency_pairwise_private.max_messages_per_response == 3
+    assert settings.messaging.latency_pairwise_private.max_turns_per_conversation == 4
     assert (
         settings.messaging.latency_pairwise_private.max_messages_sent_per_power
         is None
@@ -82,7 +83,7 @@ def test_load_settings_loads_demo_messaging_setup() -> None:
 
 
 def test_load_settings_does_not_fall_back_to_removed_historical_setups() -> None:
-    removed_name = "same_EFG_9"
+    removed_name = "same_EFGA_11"
 
     with pytest.raises(SetupConfigNotFoundError) as exc_info:
         load_settings(removed_name)
@@ -107,7 +108,7 @@ def test_load_settings_from_explicit_path(tmp_path: Path) -> None:
 power_models:
   ENGLAND: ~
   FRANCE: custom/model
-map_name: "configs/maps/EFG_9.map"
+map_name: "configs/maps/EFGA_11.map"
 max_years: 2
 win_score: 9
 prompt_variant: baseline_orders
@@ -202,7 +203,7 @@ def test_setup_path_helpers_use_explicit_directory(tmp_path: Path) -> None:
 @pytest.mark.parametrize(
     "unsafe_name",
     [
-        "../demo_setups/demo_EFGA_11_short_press",
+        "../demo_setups/short_demo_EFGA_baseline",
         "nested/setup",
         r"nested\setup",
         "..",
@@ -220,7 +221,7 @@ def test_load_settings_rejects_invalid_game_bounds(tmp_path: Path) -> None:
         """default_model: "test/model"
 power_models:
   ENGLAND: "test/model"
-map_name: "configs/maps/EFG_9.map"
+map_name: "configs/maps/EFGA_11.map"
 max_years: 0
 win_score: 99
 total_scs: 34
@@ -255,7 +256,7 @@ def test_load_settings_accepts_windows_project_map_path(tmp_path: Path) -> None:
         r"""default_model: "test/model"
 power_models:
   ENGLAND: "test/model"
-map_name: 'C:\Users\Rayan\Desktop\Prog Project\StratosAPI\configs\maps\EFG_9.map'
+map_name: 'C:\Users\Rayan\Desktop\Prog Project\StratosAPI\configs\maps\EFGA_11.map'
 max_years: 1
 win_score: 9
 """,
@@ -266,5 +267,5 @@ win_score: 9
 
     assert (
         settings.map_name
-        == r"C:\Users\Rayan\Desktop\Prog Project\StratosAPI\configs\maps\EFG_9.map"
+        == r"C:\Users\Rayan\Desktop\Prog Project\StratosAPI\configs\maps\EFGA_11.map"
     )

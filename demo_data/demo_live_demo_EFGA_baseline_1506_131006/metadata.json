@@ -1,14 +1,14 @@
 {
   "schema": "stratosapi-demo-run-v1",
-  "run_id": "demo_live_demo_EFGA_11_short_press_0906_112314",
-  "name": "EFGA 11 short press (live) (09.06.2026 - 13:23)",
+  "run_id": "demo_live_demo_EFGA_baseline_1506_131006",
+  "name": "EFGA baseline (live) (15.06.2026 - 15:10)",
   "run_mode": "live",
   "status": "done",
-  "created_at": "2026-06-09T11:23:14.273096+00:00",
-  "setup": "demo_EFGA_11_short_press",
-  "setup_name": "demo_EFGA_11_short_press",
-  "setup_label": "EFGA 11 short press",
-  "setup_path": "configs/demo_setups/demo_EFGA_11_short_press.yaml",
+  "created_at": "2026-06-15T13:10:06.979537+00:00",
+  "setup": "demo_EFGA_baseline",
+  "setup_name": "demo_EFGA_baseline",
+  "setup_label": "EFGA baseline",
+  "setup_path": "configs/demo_setups/demo_EFGA_baseline.yaml",
   "map": "configs/maps/EFGA_11.map",
   "map_name": "configs/maps/EFGA_11.map",
   "powers": [
@@ -19,15 +19,15 @@
   ],
   "power_models": {
     "ENGLAND": "mistralai/mistral-nemo",
-    "FRANCE": "mistralai/mistral-nemo",
-    "GERMANY": "meta-llama/llama-3.1-8b-instruct",
-    "AUSTRIA": "meta-llama/llama-3.1-8b-instruct"
+    "FRANCE": "meta-llama/llama-3.1-8b-instruct",
+    "GERMANY": "qwen/qwen3-235b-a22b-2507",
+    "AUSTRIA": "deepseek/deepseek-v4-flash"
   },
   "effective_power_models": {
     "ENGLAND": "mistralai/mistral-nemo",
-    "FRANCE": "mistralai/mistral-nemo",
-    "GERMANY": "meta-llama/llama-3.1-8b-instruct",
-    "AUSTRIA": "meta-llama/llama-3.1-8b-instruct"
+    "FRANCE": "meta-llama/llama-3.1-8b-instruct",
+    "GERMANY": "qwen/qwen3-235b-a22b-2507",
+    "AUSTRIA": "deepseek/deepseek-v4-flash"
   },
   "model_assignment_policy": "configured_order",
   "model_assignment_seed": null,
@@ -57,7 +57,7 @@
       "matched_model": null
     }
   },
-  "max_years": 2,
+  "max_years": 12,
   "win_score": 11,
   "total_scs": 34,
   "messaging": {
@@ -76,13 +76,13 @@
     "GERMANY": 3,
     "AUSTRIA": 3
   },
-  "finished_at": "2026-06-09T11:25:04.886999+00:00",
-  "final_status": "completed_no_winner",
-  "winner": null,
+  "finished_at": "2026-06-15T13:53:07.635155+00:00",
+  "final_status": "winner",
+  "winner": "AUSTRIA",
   "final_scores": {
     "ENGLAND": 3,
-    "FRANCE": 4,
-    "GERMANY": 3,
-    "AUSTRIA": 3
+    "FRANCE": 3,
+    "GERMANY": 8,
+    "AUSTRIA": 11
   }
 }
