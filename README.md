@@ -1,87 +1,110 @@
-# StratosAPI Demo README Plan
+# StratosAPI Demo
 
-This file temporarily records the planned structure for the final public README.
-It is a draft outline only: the detailed documentation files, video link, final
-credits, and final installation verification still need to be completed later.
+## Introduction
 
-## Planned README Structure
+StratosAPI Demo is a reduced and runnable version of the broader
+[StratosAPI](https://github.com/Rayou6/StratosAPI) project. I made this version
+for the course **Skills: Programming with Advanced Computer Languages** at the
+University of St. Gallen, taught by Professor **Silic Mario**.
 
-### 1. Short Project Introduction
+The goal of this repository is to keep only the parts needed for the demo:
+replaying saved AI Diplomacy games, starting a live model-vs-model run, and
+inspecting the map, phases, orders, private messages, scores, and game progress
+in a local dashboard.
 
-Introduce StratosAPI Demo as a compact, runnable demo version of the broader
-StratosAPI project.
+Saved replays work without any API key. An OpenRouter API key is only needed if
+you launch a new live run.
 
-Include:
+### Motivation
 
-- A short explanation of what the demo shows.
-- A link to the main StratosAPI repository.
-- A clear note that this repository is a cleaned demo package, not a random
-  copy of unrelated code.
+I chose this project because I wanted to study how LLMs behave in a social
+strategy environment, where decisions are not only about finding a good move but
+also about communicating, cooperating, bluffing, and sometimes betraying other
+players. Diplomacy is useful for this because the game makes social behavior
+visible: messages, promises, alliances, and final orders can all be compared.
 
-### 2. What This Demo Shows
+The initial inspiration came from
+[this video about Claude playing Catan](https://www.youtube.com/watch?v=BER3EhUIyz0).
+From there, the idea grew into a project that can also support research-style
+benchmarking: different LLMs can be placed in the same type of environment and
+their behavior can be compared, since models clearly do not all play, negotiate,
+or react in the same way.
 
-Keep this section short and concrete.
+## Installation
 
-Main demo features:
+These instructions assume that Python 3.13, Git, `pip`, and `venv` are already
+installed on your machine.
 
-- Replay saved AI Diplomacy games.
-- Start a live model-vs-model run.
-- Inspect orders, private messages, scores, phases, and game progression in the
-  dashboard.
+I recommend using [`uv`](https://docs.astral.sh/uv/getting-started/installation/)
+because it is faster and the project already includes the files needed for it
+(`pyproject.toml` and `uv.lock`). The classic `pip` + `venv` setup also works.
 
-Saved replays should work without any API key.
-Live runs should require an OpenRouter API key only when the user actually
-launches a live run.
+For live runs, an optional `OPENROUTER_API_KEY` is provided privately on the
+course website. No public API key is included in this repository. A personal
+OpenRouter API key can also be used. Saved replays do not need any key.
 
-### 3. Requirements
+### macOS / UNIX
 
-List the minimal requirements early.
-
-Planned requirements:
-
-- Python 3.13 or the project-supported Python version.
-- Optional but recommended: `uv`.
-- Fallback: classic `pip` and `venv`.
-- Optional for live runs only: `OPENROUTER_API_KEY`.
-
-### 4. Installation
-
-Provide two installation paths.
-
-Recommended path with `uv`:
+#### Option A: with uv
 
 ```bash
+git clone https://github.com/Rayou6/StratosAPI-Demo.git
+cd StratosAPI-Demo
+
 uv sync
 uv run python -m demo_app.server
 ```
 
-Classic fallback path with `pip` on macOS/Linux:
+#### Option B: with pip and venv
 
 ```bash
-python -m venv .venv
+git clone https://github.com/Rayou6/StratosAPI-Demo.git
+cd StratosAPI-Demo
+
+python3.13 -m venv .venv
 source .venv/bin/activate
 python -m pip install --upgrade pip
 python -m pip install -e .
 python -m demo_app.server
 ```
 
-Classic fallback path with `pip` on Windows PowerShell:
+If your Python 3.13 command is named differently, use that command instead of
+`python3.13`.
+
+### Windows
+
+#### Option A: with uv
 
 ```powershell
-python -m venv .venv
+git clone https://github.com/Rayou6/StratosAPI-Demo.git
+cd StratosAPI-Demo
+
+uv sync
+uv run python -m demo_app.server
+```
+
+#### Option B: with pip and venv
+
+```powershell
+git clone https://github.com/Rayou6/StratosAPI-Demo.git
+cd StratosAPI-Demo
+
+py -3.13 -m venv .venv
 .\.venv\Scripts\Activate.ps1
 python -m pip install --upgrade pip
 python -m pip install -e .
 python -m demo_app.server
 ```
 
-The final README should explain that `pip install -e .` reads the dependencies
-from `pyproject.toml`, so a separate `requirements.txt` is not required unless
-we later decide to add one for convenience.
+If `py -3.13` is not available on your Windows setup, use the command that
+points to your Python 3.13 installation.
 
-### 5. Run The Demo
+The `pip install -e .` command installs the dependencies declared in
+`pyproject.toml`, so a separate `requirements.txt` file is not needed here.
 
-Explain the launch command and the local URL.
+## Run The Demo
+
+After installation, start the local demo server:
 
 ```bash
 python -m demo_app.server
@@ -93,101 +116,55 @@ Then open:
 http://127.0.0.1:8765
 ```
 
-Mention the alternate port option:
+If port `8765` is already in use, choose another one:
 
 ```bash
 python -m demo_app.server --port 8766
 ```
 
-### 6. Using The Dashboard
+## Using The Dashboard
 
-Keep the dashboard instructions short and practical.
+A short YouTube tutorial will be available soon and is strongly recommended for
+understanding the dashboard quickly. The adapted game rules will be documented
+in [docs/game-rules.md](docs/game-rules.md).
 
-Include:
+To replay an existing run, open the `Replay` tab, choose a historic run, and
+click `Open replay`.
 
-- How to select and replay a saved run.
-- How to start a live run.
-- What the main dashboard panels show.
-- A link to the short unlisted YouTube tutorial video.
-- A link to `docs/game-rules.md`.
+To start a new live run, open the `Live` tab, choose the demo setup, enter an
+OpenRouter API key, and click `Launch`.
 
-The tutorial video should stay short, ideally under five minutes.
+Once a run is open, the dashboard lets you move through the phases and inspect
+the map, orders, messages, scores, reasoning, and live events.
 
-### 7. Additional Documentation
+## Additional Documentation
 
-Create a `docs/` folder later and link to these files from the README:
+More project notes will be added here:
 
-- `docs/game-rules.md`
-  - Clear and concise explanation of the adapted Diplomacy rules used by the
-    demo.
-- `docs/architecture.md`
-  - Short architecture overview for reading the project.
-  - Explain the main folders and important files.
-  - Explain the main algorithmic/runtime decisions without becoming a long
-    report.
-- `docs/research-context.md`
-  - Link again to the main StratosAPI repository.
-  - Explain the original research goal: benchmarking LLM behavior in Diplomacy.
-  - Summarize the most relevant early results.
-  - Describe possible future extensions.
+- [Architecture notes](docs/architecture.md)
+- [Research context](docs/research-context.md)
 
-### 8. Demo Data Policy
+## Credits And Notes
 
-The final demo should only keep useful replay data.
+This project uses the Python
+[`diplomacy`](https://github.com/diplomacy/diplomacy) package for the Diplomacy
+game engine.
 
-Planned policy:
+Music used in the local demo:
 
-- No dry-run replay data.
-- No old replay clutter.
-- Keep only the four most recent selected live runs, from
-  `0906_102358` onward.
+- `Broken Accord`: based on **I Promised You** from *Arcane* and **Fallout**
+  from *Arcane*.
+- `Fellowship`: based on music from *The Lord of the Rings: The Fellowship of
+  the Ring*.
+- `Velvet Tribunal`: based on **The Courtroom's Magician** from *Professor
+  Layton vs. Phoenix Wright*.
+- `Crimson Front`: based on **To Ashes and Blood** from *Arcane*, by Woodkid.
 
-Current target kept runs:
+This project originally started only for the course **Skills: Programming with
+Advanced Computer Languages**. The idea of extending it toward a broader
+research project came during the development process. It was not used for any
+other course or occasion before this one.
 
-- `demo_live_demo_EFGA_11_short_press_0906_102358`
-- `demo_live_demo_EFGA_11_short_press_0906_112314`
-- `demo_live_demo_EFGA_11_short_press_0906_112845`
-- `demo_live_demo_EFGA_11_short_press_0906_123909`
-
-### 9. Troubleshooting
-
-Keep this short.
-
-Useful entries:
-
-- `python` vs `python3`.
-- Port `8765` already in use.
-- `pip` too old: run `python -m pip install --upgrade pip`.
-- Windows virtual environment activation.
-- Saved replays do not require an API key.
-- Live runs require `OPENROUTER_API_KEY`.
-
-### 10. Credits And Notes
-
-Include:
-
-- Credit for the Python `diplomacy` package.
-- Music credits.
-- A short personal ownership disclaimer.
-- A short Codex assistance note.
-
-Suggested Codex note:
-
-```text
 I used Codex as a programming assistant to speed up implementation, debugging,
 and cleanup. The project idea, architecture, research direction, and final
 decisions are my own work.
-```
-
-## Final README Validation Checklist
-
-Before publishing the GitHub repository:
-
-- Clone the repository into a fresh folder.
-- Test the `pip` installation path without using `uv`.
-- Launch the demo server.
-- Confirm the dashboard opens.
-- Confirm saved replays are visible and replay correctly.
-- Confirm no API key is required for replay.
-- Confirm live runs only require an API key when launched.
-- Test the GitHub "Download ZIP" flow if possible.

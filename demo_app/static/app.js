@@ -1279,7 +1279,7 @@ function showDashboardFinished() {
 }
 
 function updateRunningBanner(event = null) {
-  const modeLabel = state.liveRunMode === "live" ? "Live run" : "Dry-run";
+  const modeLabel = state.liveRunMode === "live" ? "Live run" : "Run";
   const detail = event?.phase || event?.status || state.liveRunId || "starting";
   els.runStateText.textContent = `${modeLabel} in progress - ${detail}`;
 }

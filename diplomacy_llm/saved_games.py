@@ -63,13 +63,15 @@ def portable_map_reference(raw_map: str) -> str:
         project_relative = _project_relative(existing_path)
         if project_relative is not None:
             return project_relative
-        return str(existing_path)
 
     filename = _path_name_for_any_platform(raw_map)
     if filename:
         project_map = PROJECT_MAPS_DIR / filename
         if project_map.exists():
             return project_map.relative_to(PROJECT_ROOT).as_posix()
+
+    if existing_path is not None:
+        return str(existing_path)
 
     return raw_map
 

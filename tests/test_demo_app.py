@@ -258,6 +258,7 @@ def test_demo_server_serves_run_api_and_static_ui(tmp_path: Path) -> None:
         runs = _read_json(f"{base_url}/api/runs")
         replay = _read_json(f"{base_url}/api/runs/sample_replay")
         html = _read_text(base_url, "/")
+        styles = _read_text(base_url, "/styles.css")
     finally:
         server.shutdown()
         thread.join(timeout=5)
@@ -270,6 +271,8 @@ def test_demo_server_serves_run_api_and_static_ui(tmp_path: Path) -> None:
     assert 'class="mode-tabs"' in html
     assert 'data-mode="live"' in html
     assert 'data-mode="replay"' in html
+    assert 'data-mode="dry_run"' not in html
+    assert "grid-template-columns: repeat(2, minmax(0, 1fr));" in styles
     assert 'data-detail-tab="stats"' in html
     assert "/app.js" in html
 
