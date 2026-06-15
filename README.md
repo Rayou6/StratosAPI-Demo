@@ -2,10 +2,17 @@
 
 ## Introduction
 
-StratosAPI Demo is a reduced and runnable version of the broader
-[StratosAPI](https://github.com/Rayou6/StratosAPI) project. I made this version
-for the course **Skills: Programming with Advanced Computer Languages** at the
-University of St. Gallen, taught by Professor **Silic Mario**.
+StratosAPI Demo is a reduced and runnable version of my broader
+[StratosAPI](https://github.com/Rayou6/StratosAPI) project. I created this
+shorter repository for the course submission to make the code easier to read and
+review, while also letting me continue the research project separately without
+changing the demo version used for grading.
+This difference is explained again below and in
+[docs/research-context.md](docs/research-context.md).
+
+I made this version for the course **Skills: Programming with Advanced Computer
+Languages** at the University of St. Gallen, taught by Professor **Silic
+Mario**.
 
 The goal of this repository is to keep only the parts needed for the demo:
 replaying saved AI Diplomacy games, starting a live model-vs-model run, and
@@ -122,11 +129,18 @@ If port `8765` is already in use, choose another one:
 python -m demo_app.server --port 8766
 ```
 
+If you installed the project with `uv`, you can also run the same commands by
+adding `uv run` at the beginning:
+
+```bash
+uv run python -m demo_app.server
+```
+
 ## Using The Dashboard
 
-A short YouTube tutorial will be available soon and is strongly recommended for
-understanding the dashboard quickly. The adapted game rules will be documented
-in [docs/game-rules.md](docs/game-rules.md).
+A short [YouTube tutorial](https://www.youtube.com/) is available and is
+strongly recommended for understanding the dashboard quickly. The adapted game
+rules are documented in [docs/game-rules.md](docs/game-rules.md).
 
 To replay an existing run, open the `Replay` tab, choose a historic run, and
 click `Open replay`.
@@ -137,9 +151,21 @@ OpenRouter API key, and click `Launch`.
 Once a run is open, the dashboard lets you move through the phases and inspect
 the map, orders, messages, scores, reasoning, and live events.
 
+## Demo Run Limits
+
+The demo setups intentionally use 4 countries instead of the 7 countries from
+the full Diplomacy board, and live games stop after 12 in-game years. This is a
+design choice to keep OpenRouter calls and costs under control, since live runs
+use my personal budget.
+
+Because of this, some demo runs can end without a winner. It is still possible
+to use another OpenRouter key, create a custom setup with more countries, and
+remove the year limit to run a longer game that only stops when a winner is
+found.
+
 ## Additional Documentation
 
-More project notes will be added here:
+More project notes are available here:
 
 - [Architecture notes](docs/architecture.md)
 - [Research context](docs/research-context.md)
