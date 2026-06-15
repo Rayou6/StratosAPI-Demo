@@ -1,75 +1,193 @@
-Game rules:
+# StratosAPI Demo README Plan
 
-## The Goal
+This file temporarily records the planned structure for the final public README.
+It is a draft outline only: the detailed documentation files, video link, final
+credits, and final installation verification still need to be completed later.
 
-You're playing on a map of 1900s Europe. There are **7 powers**: Austria, England, France, Germany, Italy, Russia, Turkey. Everyone starts with 3-4 units.
+## Planned README Structure
 
-**To win**: control **18 of the 34 supply centers** (the key cities on the map). First to 18 wins. In practice games often end in a draw if nobody dominates.
+### 1. Short Project Introduction
 
----
+Introduce StratosAPI Demo as a compact, runnable demo version of the broader
+StratosAPI project.
 
-## How It Works
+Include:
 
-### Supply Centers
+- A short explanation of what the demo shows.
+- A link to the main StratosAPI repository.
+- A clear note that this repository is a cleaned demo package, not a random
+  copy of unrelated code.
 
-Key cities — Paris, London, Berlin, Moscow, etc. You start owning 3 or 4 (your home centers). **Each SC you own = 1 unit you're allowed to have.** Capture more → build more units. Lose some → you have to destroy units.
+### 2. What This Demo Shows
 
-### One Turn = 3 Phases
+Keep this section short and concrete.
 
-**1. Spring Movement** (e.g. S1901M)
-Everyone writes their orders **simultaneously and secretly**, then they're all revealed at once. No turn-by-turn — everything happens at the same time. You can order each unit to:
+Main demo features:
 
-- `A PAR - BUR` → Army in Paris moves to Burgundy
-- `A PAR H` → stays in place (Hold)
-- `A MUN S A PAR - BUR` → Army in Munich **supports** Paris's move (gives it +1 strength)
-- `F BRE - MAO` → Fleet in Brest moves to the Atlantic Ocean
+- Replay saved AI Diplomacy games.
+- Start a live model-vs-model run.
+- Inspect orders, private messages, scores, phases, and game progression in the
+  dashboard.
 
-**2. Fall Movement** (e.g. F1901M)
-Same thing. But at the end of Fall, SCs change ownership — if your unit is standing on an enemy SC, you take it.
+Saved replays should work without any API key.
+Live runs should require an OpenRouter API key only when the user actually
+launches a live run.
 
-**3. Winter Adjustment** (e.g. W1901A)
-Count up: more SCs than units → you **build**. Fewer SCs → you **disband**. This is the only phase where unit counts change.
+### 3. Requirements
 
----
+List the minimal requirements early.
 
-## The Key Mechanic: Conflicts
+Planned requirements:
 
-Since everyone moves simultaneously, two units can target the same territory.
+- Python 3.13 or the project-supported Python version.
+- Optional but recommended: `uv`.
+- Fallback: classic `pip` and `venv`.
+- Optional for live runs only: `OPENROUTER_API_KEY`.
 
-- `A PAR - BUR` and `A MUN - BUR` at the same time → **bounce**, both stay put
-- But if Munich has support (`A BOH S A MUN - BUR`) → Munich has strength 2, Paris has strength 1 → Munich takes Burgundy and **Paris is bounced back**
-- A unit can be **dislodged** if attacked with enough support — it must then **retreat** or **disband**
+### 4. Installation
 
----
+Provide two installation paths.
 
-## The Diplomacy Part (what gives the game its name)
+Recommended path with `uv`:
 
-Before each movement phase, players can **send private messages** to each other. This is where everything happens — proposing alliances, coordinating supports, promising not to attack... or lying. There is **no mechanism that forces you to keep your promises**. Betrayal is completely legal and very common.
+```bash
+uv sync
+uv run python -m demo_app.server
+```
 
----
+Classic fallback path with `pip` on macOS/Linux:
 
-## Quick Example Between Us
+```bash
+python -m venv .venv
+source .venv/bin/activate
+python -m pip install --upgrade pip
+python -m pip install -e .
+python -m demo_app.server
+```
 
-You play France, I play England.
+Classic fallback path with `pip` on Windows PowerShell:
 
-- I message you: _"I won't move into the English Channel if you keep your fleet in Brest"_
-- You reply: _"Deal, want to attack Germany together?"_
-- We submit our orders simultaneously
-- I play `F LON - ENG` anyway → you have nothing to defend with → I take the Channel
+```powershell
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install --upgrade pip
+python -m pip install -e .
+python -m demo_app.server
+```
 
-That's exactly what the LLMs in your project will have to navigate.
+The final README should explain that `pip install -e .` reads the dependencies
+from `pyproject.toml`, so a separate `requirements.txt` is not required unless
+we later decide to add one for convenience.
 
----
+### 5. Run The Demo
 
----
+Explain the launch command and the local URL.
 
-### Goal
+```bash
+python -m demo_app.server
+```
 
-Build a complete pipeline to:Arena / LLM-based Multi-Agent System
+Then open:
 
-1. Run full Diplomacy games where each power is controlled by a different LLM (via OpenRouter API).
-2. Support all game phases: movement, retreats, adjustments, AND inter-power messaging (press/diplomacy).
-3. Benchmark LLM behavior across multiple criteria after each game.
-4. Optionally assign strategies to LLMs at game start and track adherence.
-5. Eventually have an AI "admin agent" that reviews games and evolves strategies autonomously.
-6. Produce clean analysis reports and visualizations.
+```text
+http://127.0.0.1:8765
+```
+
+Mention the alternate port option:
+
+```bash
+python -m demo_app.server --port 8766
+```
+
+### 6. Using The Dashboard
+
+Keep the dashboard instructions short and practical.
+
+Include:
+
+- How to select and replay a saved run.
+- How to start a live run.
+- What the main dashboard panels show.
+- A link to the short unlisted YouTube tutorial video.
+- A link to `docs/game-rules.md`.
+
+The tutorial video should stay short, ideally under five minutes.
+
+### 7. Additional Documentation
+
+Create a `docs/` folder later and link to these files from the README:
+
+- `docs/game-rules.md`
+  - Clear and concise explanation of the adapted Diplomacy rules used by the
+    demo.
+- `docs/architecture.md`
+  - Short architecture overview for reading the project.
+  - Explain the main folders and important files.
+  - Explain the main algorithmic/runtime decisions without becoming a long
+    report.
+- `docs/research-context.md`
+  - Link again to the main StratosAPI repository.
+  - Explain the original research goal: benchmarking LLM behavior in Diplomacy.
+  - Summarize the most relevant early results.
+  - Describe possible future extensions.
+
+### 8. Demo Data Policy
+
+The final demo should only keep useful replay data.
+
+Planned policy:
+
+- No dry-run replay data.
+- No old replay clutter.
+- Keep only the four most recent selected live runs, from
+  `0906_102358` onward.
+
+Current target kept runs:
+
+- `demo_live_demo_EFGA_11_short_press_0906_102358`
+- `demo_live_demo_EFGA_11_short_press_0906_112314`
+- `demo_live_demo_EFGA_11_short_press_0906_112845`
+- `demo_live_demo_EFGA_11_short_press_0906_123909`
+
+### 9. Troubleshooting
+
+Keep this short.
+
+Useful entries:
+
+- `python` vs `python3`.
+- Port `8765` already in use.
+- `pip` too old: run `python -m pip install --upgrade pip`.
+- Windows virtual environment activation.
+- Saved replays do not require an API key.
+- Live runs require `OPENROUTER_API_KEY`.
+
+### 10. Credits And Notes
+
+Include:
+
+- Credit for the Python `diplomacy` package.
+- Music credits.
+- A short personal ownership disclaimer.
+- A short Codex assistance note.
+
+Suggested Codex note:
+
+```text
+I used Codex as a programming assistant to speed up implementation, debugging,
+and cleanup. The project idea, architecture, research direction, and final
+decisions are my own work.
+```
+
+## Final README Validation Checklist
+
+Before publishing the GitHub repository:
+
+- Clone the repository into a fresh folder.
+- Test the `pip` installation path without using `uv`.
+- Launch the demo server.
+- Confirm the dashboard opens.
+- Confirm saved replays are visible and replay correctly.
+- Confirm no API key is required for replay.
+- Confirm live runs only require an API key when launched.
+- Test the GitHub "Download ZIP" flow if possible.
